@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-from routers import news
+from api.v1 import news
 
 app = FastAPI()
 
