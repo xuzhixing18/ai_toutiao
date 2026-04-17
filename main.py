@@ -1,8 +1,22 @@
+import logging
+
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-from api.v1 import news
+from api.v1 import news, user
+from common.exception_handler import register_exception_handlers
 
+# 配置基础日志
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(),  # 输出到控制台
+    ]
+)
 app = FastAPI()
+
+# 注册全局异常处理器
+register_exception_handlers(app)
 
 app.add_middleware(
     CORSMiddleware,
@@ -13,3 +27,4 @@ app.add_middleware(
 )
 
 app.include_router(news.router)
+app.include_router(user.router)
